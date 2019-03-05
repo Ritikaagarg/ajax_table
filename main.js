@@ -7,72 +7,66 @@ $(document).ready(function(){
             {
                 var arr = data;
     function CreateTable() {
-        // CREATE DYNAMIC TABLE.
-        let previoustable = document.getElementById('dynamic_table');
-        if(!!previoustable){
-            previoustable.remove();
+        let initialtable = document.getElementById('initialtable');
+        if (!!initialtable) {
+            initialtable.remove();
         }
+        // CREATE DYNAMIC TABLE.
         var table = document.createElement('table');
-        table.setAttribute('id', 'dynamicTable');
-        //key and values
-        var key = Object.keys(arr[0]);
-        var value = arr.map((elements)=>{
-            return Object.values(elements);
-        })
+        table.setAttribute('id', 'initialtable');
 
-        //table header
+        // key and values....
+        var key = Object.keys(arr[0]);
+        var value = arr.map((elements) => {
+            return Object.values(elements);
+        });
+        // Table Header......
         var tr = document.createElement('tr');
-        key.map((value, index) => {
-            var th = document.createElement('th');
-            th.innerHTML = key[index];
-            th.setAttribute('class', 'tableClass1');
-            th.setAttribute('id', key[index])
-            tr.appendChild(th);
-        })
+        let tableheader = key.map((arr1) => {
+                    var th = document.createElement('th');
+                    th.innerHTML = arr1;
+                    th.setAttribute('id',arr1)
+                    tr.appendChild(th);
+                })
+
         table.appendChild(tr);
-        
-        // table definition                
-        arr.map((value, index1) => {
+        // Table Definition......
+       var arrvalue = arr.map((arrval)=> {
             var tr = document.createElement('tr');
-            key.map((value, index2) => {
+            var arrkey = key.map((arrkey)=>  {
                 var td = document.createElement('td');
-                td.innerHTML = arr[index1][key[index2]];
-                td.setAttribute('class', 'tableClass');
+                td.innerHTML = arrval[arrkey];
                 tr.appendChild(td);
             })
-        table.appendChild(tr);
+            table.appendChild(tr);
         })
         document.body.appendChild(table);
-        addEventsToColumns();
+        addToColumns();
     }
-    
-  
-    //event listener  
-    function addEventsToColumns(){
-        var header=Object.keys(arr[0]);
-        header.map((value, index) => {
-            document.getElementById(header[index]).addEventListener('click', function (event) {
-            sortTable(event.target.innerText)
+    function addToColumns() {
+        var header = Object.keys(arr[0]);
+        console.log(header);
+        var header = header.map((header)=> {
+            document.getElementById(header).addEventListener('click', function (event) {
+                sortTable(event.target.innerHTML)
+            });
         })
-    })
-}
-
-
-//sort function
-let flag = true;
-function sortTable(param){
-    arr.sort(compare);
-    function compare(row1,row2){
-        if(row1[param]>row2[param] && flag){
-            return 1;
-        }
-        else
-        return -1;
     }
-    flag=!flag;
+    let flag = true;
+    function sortTable(parameter) {
+        arr.sort(comparison);
+        function comparison(a, b) {
+            if (a[parameter] > b[parameter] && flag) {
+                return 1;
+            }
+            else
+                return -1;
+        }
+        flag = !flag;
+        CreateTable();
+    }
     CreateTable();
-}
-CreateTable();
-}
-})
-});
+        }
+         });
+                    
+            });
